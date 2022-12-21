@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <UserSecretsId>d924e848-b55c-4864-a0b5-366c2f30d047</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+
+    <NoWarn>$(NoWarn);SYSLIB1006</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Treasure.Utils" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(ProjectName).ScenarioTests" />
+    <InternalsVisibleTo Include="$(ProjectName).Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Treasure.Utils.Argument" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Namecheap.Library\Namecheap.Library.csproj" />
+    <ProjectReference Include="..\Synology.Namecheap.Adapter.Library\Synology.Namecheap.Adapter.Library.csproj" />
+  </ItemGroup>
+
+</Project>

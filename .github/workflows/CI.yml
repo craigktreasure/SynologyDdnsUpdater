@@ -1,0 +1,65 @@
+name: 'SynologyDdnsUpdater-CI'
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.config/**'
+      - '.github/dependabot.yml'
+      - '.vscode/**'
+      - 'docs/**'
+      - 'README.md'
+
+env:
+  # Stop wasting time caching packages
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+jobs:
+  build:
+    name: 'Build SynologyDdnsUpdater'
+    runs-on: ubuntu-latest
+
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+
+    outputs:
+      package_version: ${{steps.version.outputs.package_version}}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: DotNet Format
+        run: dotnet format --no-restore --verify-no-changes
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+
+      - name: Publish
+        run: dotnet publish --configuration Release --no-build src/Synology.Ddns.Update.Service
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          name: codecov
+          directory: __test-results
+          fail_ci_if_error: true
+          verbose: true
+
+      - name: Upload output artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: __publish
+          path: __publish

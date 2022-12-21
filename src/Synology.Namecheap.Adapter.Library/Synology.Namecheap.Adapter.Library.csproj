@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Treasure.Utils" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(ProjectName).Tests" />
+    <InternalsVisibleTo Include="Synology.Ddns.Update.Service.ScenarioTests" />
+    <InternalsVisibleTo Include="Synology.Ddns.Update.Service.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Namecheap.Library\Namecheap.Library.csproj" />
+  </ItemGroup>
+
+</Project>

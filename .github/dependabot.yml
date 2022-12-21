@@ -1,0 +1,27 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: 'friday'
+    time: '17:00'
+    timezone: 'America/Los_Angeles'
+  open-pull-requests-limit: 10
+  reviewers:
+    - craigktreasure
+  assignees:
+    - craigktreasure
+
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: 'friday'
+    time: '17:00'
+    timezone: 'America/Los_Angeles'
+  open-pull-requests-limit: 10
+  reviewers:
+    - craigktreasure
+  assignees:
+    - craigktreasure
