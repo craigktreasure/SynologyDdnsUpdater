@@ -1,4 +1,4 @@
-namespace Test.Library;
+﻿namespace Test.Library;
 
 /// <summary>
 /// Class MockHttpMessageHandler.
@@ -7,7 +7,7 @@ namespace Test.Library;
 /// <seealso cref="HttpMessageHandler" />
 public class MockHttpMessageHandler : HttpMessageHandler
 {
-    private Func<HttpRequestMessage, HttpResponseMessage> sendAction;
+    private readonly Func<HttpRequestMessage, HttpResponseMessage> sendAction;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MockHttpMessageHandler"/> class.

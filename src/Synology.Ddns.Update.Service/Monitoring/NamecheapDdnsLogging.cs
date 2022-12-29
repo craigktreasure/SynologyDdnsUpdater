@@ -1,4 +1,4 @@
-namespace Synology.Ddns.Update.Service.Monitoring;
+﻿namespace Synology.Ddns.Update.Service.Monitoring;
 
 using Synology.Ddns.Update.Service.Controllers;
 

@@ -1,12 +1,16 @@
-namespace Synology.Ddns.Update.Service.Tests;
+﻿namespace Synology.Ddns.Update.Service.ScenarioTests;
 
 using global::Namecheap.Library;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using Test.Library;
+
 using Xunit.Abstractions;
+
 using SendAction = Func<HttpRequestMessage, HttpResponseMessage>;
 
 internal sealed class TestWebAppFactory : WebApplicationFactory<Program>

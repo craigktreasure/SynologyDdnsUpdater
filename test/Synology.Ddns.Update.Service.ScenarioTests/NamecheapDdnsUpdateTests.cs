@@ -1,10 +1,13 @@
-namespace Synology.Ddns.Update.Service.Tests;
+﻿namespace Synology.Ddns.Update.Service.ScenarioTests;
 
-using Synology.Namecheap.Adapter.Library;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+
+using Synology.Namecheap.Adapter.Library;
+
 using Test.Library.Namecheap;
+
 using Xunit.Abstractions;
 
 public class NamecheapDdnsUpdateTests

@@ -1,4 +1,4 @@
-namespace Namecheap.Library.Extensions;
+﻿namespace Namecheap.Library.Extensions;
 
 using System.Xml;
 using System.Xml.Serialization;

@@ -1,10 +1,11 @@
-namespace Namecheap.Library;
+﻿namespace Namecheap.Library;
 
-using Namecheap.Library.Extensions;
-using Namecheap.Library.Models;
 using System.Globalization;
 using System.Text;
 using System.Web;
+
+using Namecheap.Library.Extensions;
+using Namecheap.Library.Models;
 
 /// <summary>
 /// A Namecheap DDNS client used to update the IP address for a given host and domain.
@@ -21,9 +22,7 @@ public class NamecheapDdnsClient : INamecheapDdnsClient
     /// </summary>
     /// <param name="httpClient">The HTTP client.</param>
     public NamecheapDdnsClient(HttpClient httpClient)
-    {
-        this.httpClient = Argument.NotNull(httpClient);
-    }
+        => this.httpClient = Argument.NotNull(httpClient);
 
     /// <summary>
     /// Updates the host IP address.

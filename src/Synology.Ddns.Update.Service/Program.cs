@@ -1,7 +1,8 @@
-namespace Synology.Ddns.Update.Service;
+﻿namespace Synology.Ddns.Update.Service;
+
+using System.Diagnostics.CodeAnalysis;
 
 using Synology.Ddns.Update.Service.Extensions;
-using System.Diagnostics.CodeAnalysis;
 
 internal sealed class Program
 {

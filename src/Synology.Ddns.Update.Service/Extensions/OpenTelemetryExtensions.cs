@@ -1,17 +1,20 @@
-namespace Synology.Ddns.Update.Service.Extensions;
+﻿namespace Synology.Ddns.Update.Service.Extensions;
+
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Web;
 
 using Microsoft.Extensions.Primitives;
+
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+
 using Synology.Ddns.Update.Service.Monitoring;
 using Synology.Ddns.Update.Service.Options;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Web;
 
 [ExcludeFromCodeCoverage]
 internal static class OpenTelemetryExtensions

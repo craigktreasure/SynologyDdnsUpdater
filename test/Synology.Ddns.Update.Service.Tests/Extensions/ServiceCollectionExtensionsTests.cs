@@ -1,15 +1,17 @@
-namespace Synology.Ddns.Update.Service.Tests.Extensions;
+﻿namespace Synology.Ddns.Update.Service.Tests.Extensions;
+
+using System.Threading.RateLimiting;
 
 using global::Namecheap.Library;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+
 using Synology.Ddns.Update.Service.Extensions;
 using Synology.Ddns.Update.Service.Options;
-using System.Collections.Generic;
-using System.Threading.RateLimiting;
 
 public class ServiceCollectionExtensionsTests
 {

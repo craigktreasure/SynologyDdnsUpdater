@@ -1,8 +1,10 @@
-namespace Namecheap.Library.Tests.Extensions;
+﻿namespace Namecheap.Library.Tests.Extensions;
+
+using System.Text;
 
 using Namecheap.Library.Extensions;
 using Namecheap.Library.Models;
-using System.Text;
+
 using Test.Library.Namecheap;
 
 public class StreamExtensionsTests

@@ -1,12 +1,15 @@
-namespace Synology.Ddns.Update.Service.Controllers;
+﻿namespace Synology.Ddns.Update.Service.Controllers;
+
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
 using global::Namecheap.Library;
 using global::Namecheap.Library.Models;
+
 using Microsoft.AspNetCore.Mvc;
+
 using Synology.Ddns.Update.Service.Monitoring;
 using Synology.Namecheap.Adapter.Library;
-using System.Diagnostics;
-using System.Diagnostics.Metrics;
 
 /// <summary>
 /// Represents an API controller that performs Namecheap DDNS updates.
@@ -53,7 +56,7 @@ public class NamecheapDdnsController : ControllerBase
 
         try
         {
-            logger.DdnsUpdating(host, domainName);
+            this.logger.DdnsUpdating(host, domainName);
 
             NamecheapDdnsUpdateResponse namecheapUpdateResponse = await this.namecheapDdnsClient.UpdateHostIpAddressAsync(host, domainName, ddnsPassword, ipAddress);
 
@@ -63,12 +66,12 @@ public class NamecheapDdnsController : ControllerBase
             if (namecheapUpdateResponse.Success)
             {
                 activity?.SetStatus(ActivityStatusCode.Ok, result);
-                logger.DdnsUpdated(host, domainName);
+                this.logger.DdnsUpdated(host, domainName);
             }
             else
             {
                 activity?.SetStatus(ActivityStatusCode.Error, result);
-                logger.DdnsUpdateFailed(host, domainName, result);
+                this.logger.DdnsUpdateFailed(host, domainName, result);
             }
 
             return result;
@@ -76,7 +79,7 @@ public class NamecheapDdnsController : ControllerBase
         catch (Exception ex)
         {
             activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            logger.DdnsUpdateError(host, domainName, ex);
+            this.logger.DdnsUpdateError(host, domainName, ex);
             throw;
         }
     }

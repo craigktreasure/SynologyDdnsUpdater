@@ -1,11 +1,14 @@
-namespace Namecheap.Library.Tests;
+﻿namespace Namecheap.Library.Tests;
 
-using Namecheap.Library.Models;
 using System.Collections.Specialized;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
+
+using Namecheap.Library.Models;
+
 using Test.Library;
+
 using static Test.Library.Namecheap.MockResponseConstants;
 
 public class NamecheapDdnsClientTests

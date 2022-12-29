@@ -1,8 +1,9 @@
-namespace Namecheap.Library;
+﻿namespace Namecheap.Library;
 
-using Namecheap.Library.Models;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Namecheap.Library.Models;
 
 /// <summary>
 /// An interface representing a Namechear DDNS client.

@@ -1,8 +1,9 @@
-namespace Synology.Ddns.Update.Service;
+﻿namespace Synology.Ddns.Update.Service;
+
+using System.Diagnostics.CodeAnalysis;
 
 using global::Namecheap.Library;
 using global::Namecheap.Library.Models;
-using System.Diagnostics.CodeAnalysis;
 
 [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Created at runtime by DI.")]
 internal sealed class MockNamecheapDdnsClient : INamecheapDdnsClient

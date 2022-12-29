@@ -1,12 +1,11 @@
-using Test.Library.Namecheap;
+﻿namespace Namecheap.Library.Tests.Models;
 
-namespace Namecheap.Library.Tests.Models;
-
-using Namecheap.Library.Models;
 using System.Xml;
 using System.Xml.Serialization;
 
-using static MockResponseConstants;
+using Namecheap.Library.Models;
+
+using static Test.Library.Namecheap.MockResponseConstants;
 
 public class NamecheapDdnsUpdateResponseTests
 {

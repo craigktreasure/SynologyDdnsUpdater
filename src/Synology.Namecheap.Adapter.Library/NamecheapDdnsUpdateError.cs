@@ -1,4 +1,4 @@
-namespace Synology.Namecheap.Adapter.Library;
+﻿namespace Synology.Namecheap.Adapter.Library;
 
 internal enum NamecheapDdnsUpdateError
 {
