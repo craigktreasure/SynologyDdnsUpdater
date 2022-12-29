@@ -1,6 +1,7 @@
-namespace Synology.Ddns.Update.Service.Tests.Options;
+﻿namespace Synology.Ddns.Update.Service.Tests.Options;
 
 using Microsoft.Extensions.Configuration;
+
 using Synology.Ddns.Update.Service.Options;
 
 public class NamecheapDdnsClientOptionsTests

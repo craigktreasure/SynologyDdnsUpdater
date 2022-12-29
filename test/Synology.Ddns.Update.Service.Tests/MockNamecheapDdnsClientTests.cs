@@ -1,4 +1,4 @@
-namespace Synology.Ddns.Update.Service.Tests;
+﻿namespace Synology.Ddns.Update.Service.Tests;
 
 using global::Namecheap.Library.Models;
 

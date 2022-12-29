@@ -1,4 +1,4 @@
-namespace Synology.Namecheap.Adapter.Library.Tests;
+﻿namespace Synology.Namecheap.Adapter.Library.Tests;
 
 using global::Namecheap.Library.Models;
 

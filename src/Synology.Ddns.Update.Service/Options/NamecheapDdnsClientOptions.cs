@@ -1,4 +1,4 @@
-namespace Synology.Ddns.Update.Service.Options;
+﻿namespace Synology.Ddns.Update.Service.Options;
 
 /// <summary>
 /// Options for the Namecheap DDNS client.

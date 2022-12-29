@@ -1,4 +1,4 @@
-namespace Test.Library.Namecheap;
+﻿namespace Test.Library.Namecheap;
 
 /// <summary>
 /// A set of mock responses.

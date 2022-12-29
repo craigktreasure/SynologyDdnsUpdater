@@ -1,8 +1,10 @@
-namespace Synology.Namecheap.Adapter.Library;
+﻿namespace Synology.Namecheap.Adapter.Library;
 
-using global::Namecheap.Library.Models;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+
+using global::Namecheap.Library.Models;
+
 using static SynologyDdnsResponses;
 
 /// <summary>

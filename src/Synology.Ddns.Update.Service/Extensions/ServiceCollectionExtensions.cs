@@ -1,11 +1,13 @@
-namespace Synology.Ddns.Update.Service.Extensions;
+﻿namespace Synology.Ddns.Update.Service.Extensions;
 
-using global::Namecheap.Library;
-using Synology.Ddns.Update.Service.Monitoring;
-using Synology.Ddns.Update.Service.Options;
 using System.Globalization;
 using System.Net;
 using System.Threading.RateLimiting;
+
+using global::Namecheap.Library;
+
+using Synology.Ddns.Update.Service.Monitoring;
+using Synology.Ddns.Update.Service.Options;
 
 internal static class ServiceCollectionExtensions
 {

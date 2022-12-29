@@ -1,4 +1,4 @@
-namespace Namecheap.Library.Models;
+﻿namespace Namecheap.Library.Models;
 
 using System.Xml.Serialization;
 
