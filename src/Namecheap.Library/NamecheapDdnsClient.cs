@@ -11,11 +11,13 @@ using Namecheap.Library.Models;
 /// A Namecheap DDNS client used to update the IP address for a given host and domain.
 /// https://www.namecheap.com/support/knowledgebase/article.aspx/29/11/how-to-dynamically-update-the-hosts-ip-with-an-http-request/
 /// </summary>
-public class NamecheapDdnsClient : INamecheapDdnsClient
+public class NamecheapDdnsClient : INamecheapDdnsClient, IDisposable
 {
+    private const string endpointFormat = "https://dynamicdns.park-your-domain.com/update?host={0}&domain={1}&password={2}&ip={3}";
+
     private readonly HttpClient httpClient;
 
-    private const string endpointFormat = "https://dynamicdns.park-your-domain.com/update?host={0}&domain={1}&password={2}&ip={3}";
+    private bool disposedValue;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NamecheapDdnsClient"/> class.
@@ -23,6 +25,15 @@ public class NamecheapDdnsClient : INamecheapDdnsClient
     /// <param name="httpClient">The HTTP client.</param>
     public NamecheapDdnsClient(HttpClient httpClient)
         => this.httpClient = Argument.NotNull(httpClient);
+
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// </summary>
+    public void Dispose()
+    {
+        this.Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 
     /// <summary>
     /// Updates the host IP address.
@@ -60,6 +71,23 @@ public class NamecheapDdnsClient : INamecheapDdnsClient
             ?? throw new InvalidDataException("The response resulted in null.");
 
         return namecheapResponse;
+    }
+
+    /// <summary>
+    /// Disposes the specified disposing.
+    /// </summary>
+    /// <param name="disposing">The disposing.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!this.disposedValue)
+        {
+            if (disposing)
+            {
+                this.httpClient.Dispose();
+            }
+
+            this.disposedValue = true;
+        }
     }
 
     private static Uri FormatEndpointUrl(string host, string domainName, string ddnsPassword, string ipAddress)

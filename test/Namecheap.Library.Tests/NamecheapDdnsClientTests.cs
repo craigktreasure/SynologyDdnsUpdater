@@ -24,7 +24,7 @@ public class NamecheapDdnsClientTests
         using HttpClient httpClient = new(messageHandler);
 
         // Act
-        _ = new NamecheapDdnsClient(httpClient);
+        using NamecheapDdnsClient client = new(httpClient);
         Assert.Throws<ArgumentNullException>(nameof(httpClient), () => new NamecheapDdnsClient(null!));
     }
 
@@ -45,7 +45,7 @@ public class NamecheapDdnsClientTests
             return response;
         });
         using HttpClient httpClient = new(messageHandler);
-        NamecheapDdnsClient client = new(httpClient);
+        using NamecheapDdnsClient client = new(httpClient);
 
         // Act
         NamecheapDdnsUpdateResponse response = await client.UpdateHostIpAddressAsync(
@@ -78,7 +78,7 @@ public class NamecheapDdnsClientTests
             return response;
         });
         using HttpClient httpClient = new(messageHandler);
-        NamecheapDdnsClient client = new(httpClient);
+        using NamecheapDdnsClient client = new(httpClient);
 
         // Act
         NamecheapDdnsUpdateResponse response = await client.UpdateHostIpAddressAsync(
@@ -112,7 +112,7 @@ public class NamecheapDdnsClientTests
             return response;
         });
         using HttpClient httpClient = new(messageHandler);
-        NamecheapDdnsClient client = new(httpClient);
+        using NamecheapDdnsClient client = new(httpClient);
 
         // Act
         NamecheapDdnsUpdateResponse response = await client.UpdateHostIpAddressAsync(
