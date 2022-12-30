@@ -1,25 +1,66 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+﻿#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+ARG aspNetVersion=7.0
+ARG baseTag=${aspNetVersion}-cbl-mariner2.0-distroless
+ARG buildTag=${aspNetVersion}
+ARG appPath=./
+
+# Set to "fromlocal" to simply copy in locally built bits from appPath.
+ARG finalStage=frompublish
+
+FROM mcr.microsoft.com/dotnet/aspnet:${baseTag} AS base
+
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
+EXPOSE 8080
+EXPOSE 5443
+
+ENV \
+    # Configure web servers to bind to port 8080 and 5443 when present
+    ASPNETCORE_URLS=http://+:8080;https://+:5443 \
+    ASPNETCORE_HTTPS_PORT=5443
+
+# Condition: finalStage=frompublish
+FROM mcr.microsoft.com/dotnet/sdk:${buildTag} AS build
+
+WORKDIR /repo
+
+COPY ["Directory.Build.props", "."]
+COPY ["Directory.Packages.props", "."]
+COPY ["global.json", "."]
 COPY ["nuget.config", "."]
+COPY ["version.json", "."]
+COPY ["eng", "eng"]
+COPY ["src/.editorconfig", "src/"]
+COPY ["src/Directory.Packages.props", "src/"]
 COPY ["src/Synology.Ddns.Update.Service/Synology.Ddns.Update.Service.csproj", "src/Synology.Ddns.Update.Service/"]
 COPY ["src/Namecheap.Library/Namecheap.Library.csproj", "src/Namecheap.Library/"]
 COPY ["src/Synology.Namecheap.Adapter.Library/Synology.Namecheap.Adapter.Library.csproj", "src/Synology.Namecheap.Adapter.Library/"]
 RUN dotnet restore "src/Synology.Ddns.Update.Service/Synology.Ddns.Update.Service.csproj"
+
 COPY . .
-WORKDIR "/src/src/Synology.Ddns.Update.Service"
-RUN dotnet build "Synology.Ddns.Update.Service.csproj" -c Release -o /app/build
 
+WORKDIR "/repo/src/Synology.Ddns.Update.Service"
+
+RUN dotnet build "Synology.Ddns.Update.Service.csproj" -c Release
+
+# Condition: finalStage=frompublish
 FROM build AS publish
-RUN dotnet publish "Synology.Ddns.Update.Service.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
+RUN dotnet publish "Synology.Ddns.Update.Service.csproj" -c Release /p:UseAppHost=false
+
+# Condition: finalStage=frompublish
+FROM base AS frompublish
+
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+COPY --from=publish /repo/__publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0 .
+
+# Condition: finalStage=fromlocal
+FROM base AS fromlocal
+
+COPY $appPath /app
+
+FROM ${finalStage} AS final
+
 ENTRYPOINT ["dotnet", "Synology.Ddns.Update.Service.dll"]

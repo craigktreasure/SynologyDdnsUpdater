@@ -1,9 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <UserSecretsId>d924e848-b55c-4864-a0b5-366c2f30d047</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerDefaultDockerfile>Dockerfile</DockerDefaultDockerfile>
+    <DockerDefaultTag>synologyddnsupdater</DockerDefaultTag>
+    <DockerfileBuildArguments Condition=" '$(Configuration)' == 'Debug' ">--build-arg baseTag=7.0</DockerfileBuildArguments>
     <DockerfileContext>..\..</DockerfileContext>
 
     <NoWarn>$(NoWarn);SYSLIB1006</NoWarn>

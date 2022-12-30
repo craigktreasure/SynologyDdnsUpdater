@@ -44,10 +44,16 @@ When configuring your DDNS, use something like the following:
 Note: I would have preferred to use the Namecheap domain name for the "Username/Email", but the DDNS form doesn't allow
 the use of the `@` symbol in the "Hostname" field.
 
+## Hosting the application yourself
+
+You can follow the instructions [here][synology-ddns-update-service] to learn how to configure and run the service
+yourself.
+
 [brettterpstra-post]: https://brettterpstra.com/2021/08/26/custom-urls-for-your-synology-with-namecheap/ "Custom URLs for your Synology with Namecheap"
 [encodebudenet-post]: https://en.code-bude.net/2022/02/17/set-up-namecheap-com-ddns-in-synology-dsm/ "Set up Namecheap.com DDNS in Synology DSM"
 [namecheap]: https://namecheap.com "Namecheap"
 [namecheap-ddns-api]: https://www.namecheap.com/support/knowledgebase/article.aspx/29/11/how-to-dynamically-update-the-hosts-ip-with-an-http-request/ "How to dynamically update the host's IP with an HTTP request?"
 [namecheap-enable-ddns]: https://www.namecheap.com/support/knowledgebase/article.aspx/595/11/how-do-i-enable-dynamic-dns-for-a-domain/ "How do I enable Dynamic DNS for a domain?"
 [namecheap-setup-host]: https://www.namecheap.com/support/knowledgebase/article.aspx/43/11/how-do-i-set-up-a-host-for-dynamic-dns/ "How do I set up a Host for Dynamic DNS?"
+[synology-ddns-update-service]: /src/Synology.Ddns.Update.Service/README.md
 [synology-ddns]: https://kb.synology.com/en-br/DSM/help/DSM/AdminCenter/connection_ddns "Synology DDNS"
