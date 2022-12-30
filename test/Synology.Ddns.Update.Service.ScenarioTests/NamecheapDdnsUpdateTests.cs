@@ -17,111 +17,44 @@ public class NamecheapDdnsUpdateTests
     public NamecheapDdnsUpdateTests(ITestOutputHelper testOutputHelper)
         => this.testOutputHelper = testOutputHelper;
 
-    [Fact]
-    public async Task Update_DomainNameNotFound()
+    [Theory]
+    [InlineData(SynologyDdnsResponses.NoHost, MockResponseConstants.DomainNameNotFound)]
+    [InlineData("911 [Invalid IP]", MockResponseConstants.InvalidIp)]
+    [InlineData(SynologyDdnsResponses.BadAuth, MockResponseConstants.PasswordsDoNotMatch)]
+    [InlineData(SynologyDdnsResponses.NoHost, MockResponseConstants.RecordNotFound)]
+    [InlineData(SynologyDdnsResponses.Good, MockResponseConstants.Success)]
+    [InlineData("911 [Some unexpected error occurred;]", MockResponseConstants.UnexpectedError)]
+    public async Task Update(string expectedResponse, string clientResponse)
     {
         // Arrange
         using TestWebAppFactory factory = new(this.testOutputHelper,
-            request => BuildResponseMessage(MockResponseConstants.DomainNameNotFound));
-        HttpClient client = factory.CreateClient();
+            request => BuildResponseMessage(clientResponse));
+        using HttpClient client = factory.CreateClient();
         Uri endpoint = BuildEndpoint();
 
         // Act
-        HttpResponseMessage response = await client.GetAsync(endpoint);
+        using HttpResponseMessage response = await client.GetAsync(endpoint);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         string responseContent = await response.Content.ReadAsStringAsync();
-        Assert.Equal(SynologyDdnsResponses.NoHost, responseContent);
+        Assert.Equal(expectedResponse, responseContent);
     }
 
     [Fact]
-    public async Task Update_InvalidIp()
+    public async Task Update_WithClientException()
     {
         // Arrange
         using TestWebAppFactory factory = new(this.testOutputHelper,
-            request => BuildResponseMessage(MockResponseConstants.InvalidIp));
-        HttpClient client = factory.CreateClient();
+            _ => throw new InvalidOperationException());
+        using HttpClient client = factory.CreateClient();
         Uri endpoint = BuildEndpoint();
 
         // Act
-        HttpResponseMessage response = await client.GetAsync(endpoint);
+        using HttpResponseMessage response = await client.GetAsync(endpoint);
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        string responseContent = await response.Content.ReadAsStringAsync();
-        Assert.Equal("911 [Invalid IP]", responseContent);
-    }
-
-    [Fact]
-    public async Task Update_PasswordsDoNotMatch()
-    {
-        // Arrange
-        using TestWebAppFactory factory = new(this.testOutputHelper,
-            request => BuildResponseMessage(MockResponseConstants.PasswordsDoNotMatch));
-        HttpClient client = factory.CreateClient();
-        Uri endpoint = BuildEndpoint();
-
-        // Act
-        HttpResponseMessage response = await client.GetAsync(endpoint);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        string responseContent = await response.Content.ReadAsStringAsync();
-        Assert.Equal(SynologyDdnsResponses.BadAuth, responseContent);
-    }
-
-    [Fact]
-    public async Task Update_RecordNotFound()
-    {
-        // Arrange
-        using TestWebAppFactory factory = new(this.testOutputHelper,
-            request => BuildResponseMessage(MockResponseConstants.RecordNotFound));
-        HttpClient client = factory.CreateClient();
-        Uri endpoint = BuildEndpoint();
-
-        // Act
-        HttpResponseMessage response = await client.GetAsync(endpoint);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        string responseContent = await response.Content.ReadAsStringAsync();
-        Assert.Equal(SynologyDdnsResponses.NoHost, responseContent);
-    }
-
-    [Fact]
-    public async Task Update_Success()
-    {
-        // Arrange
-        using TestWebAppFactory factory = new(this.testOutputHelper, request => BuildResponseMessage());
-        HttpClient client = factory.CreateClient();
-        Uri endpoint = BuildEndpoint();
-
-        // Act
-        HttpResponseMessage response = await client.GetAsync(endpoint);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        string responseContent = await response.Content.ReadAsStringAsync();
-        Assert.Equal(SynologyDdnsResponses.Good, responseContent);
-    }
-
-    [Fact]
-    public async Task Update_UnexpectedError()
-    {
-        // Arrange
-        using TestWebAppFactory factory = new(this.testOutputHelper,
-            request => BuildResponseMessage(MockResponseConstants.UnexpectedError));
-        HttpClient client = factory.CreateClient();
-        Uri endpoint = BuildEndpoint();
-
-        // Act
-        HttpResponseMessage response = await client.GetAsync(endpoint);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        string responseContent = await response.Content.ReadAsStringAsync();
-        Assert.Equal("911 [Some unexpected error occurred;]", responseContent);
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
     }
 
     private static Uri BuildEndpoint(string host = "@", string domain = "mydomain.com", string password = "myPassword", string ip = "127.0.0.1")

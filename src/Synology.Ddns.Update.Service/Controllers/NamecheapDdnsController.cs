@@ -33,8 +33,8 @@ public class NamecheapDdnsController : ControllerBase
     /// <param name="namecheapDdnsClient">The namecheap DDNS client.</param>
     public NamecheapDdnsController(ILogger<NamecheapDdnsController> logger, INamecheapDdnsClient namecheapDdnsClient)
     {
-        this.logger = logger;
-        this.namecheapDdnsClient = namecheapDdnsClient;
+        this.logger = Argument.NotNull(logger);
+        this.namecheapDdnsClient = Argument.NotNull(namecheapDdnsClient);
     }
 
     /// <summary>
