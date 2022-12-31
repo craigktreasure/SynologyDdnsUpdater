@@ -8,7 +8,7 @@ internal class MonitoringOptions
     public const string SectionName = nameof(MonitoringOptions);
 
     /// <summary>
-    /// Gets or sets a value indicating whether OopenTelemetry should be enabled.
+    /// Gets or sets a value indicating whether OpenTelemetry should be enabled.
     /// </summary>
     public bool OpenTelemetryEnabled { get; set; }
 

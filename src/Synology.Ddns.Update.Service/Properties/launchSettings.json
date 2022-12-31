@@ -1,15 +1,18 @@
-{
+﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:17971",
-      "sslPort": 44335
-    }
-  },
   "profiles": {
-    "Service | Dev | https": {
+    "Project | https | Mock": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7257;http://localhost:5064",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "NamecheapDdnsClientOptions__MockClient": "true"
+      }
+    },
+    "Project | https | Real": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -19,17 +22,18 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Service | Prod | https": {
+    "Project | http | Mock": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7257;http://localhost:5064",
+      "applicationUrl": "http://localhost:5064",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "NamecheapDdnsClientOptions__MockClient": "true"
       }
     },
-    "Service | Dev | http": {
+    "Project | http | Real": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -39,20 +43,39 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "Docker": {
+    "Docker | https | Mock": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "publishAllPorts": true,
+      "useSSL": true,
+      "environmentVariables": {
+        "NamecheapDdnsClientOptions__MockClient": "true"
+      }
+    },
+    "Docker | https | Real": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "useSSL": true
+    },
+    "Docker | http | Mock": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "NamecheapDdnsClientOptions__MockClient": "true",
+        "ASPNETCORE_URLS": "http://+"
+      },
+      "useSSL": false
+    },
+    "Docker | http | Real": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "http://+"
+      },
+      "useSSL": false
     }
   }
 }
