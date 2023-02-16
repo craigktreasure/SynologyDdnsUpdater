@@ -7,7 +7,6 @@ using System.Web;
 
 using Microsoft.Extensions.Primitives;
 
-using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -66,8 +65,7 @@ internal static class OpenTelemetryExtensions
                     .AddMeter(Telemetry.Meter.Name)
                     .AddHttpClientInstrumentation()
                     .AddAspNetCoreInstrumentation();
-            })
-            .StartWithHost();
+            });
 
         // Clear default logging providers used by WebApplication host.
         builder.Logging.ClearProviders();
