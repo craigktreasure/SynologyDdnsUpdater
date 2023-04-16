@@ -1,7 +1,8 @@
 # Synology DDNS Updater
 
-[![CI Build](https://github.com/craigktreasure/SynologyDdnsUpdater/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/craigktreasure/SynologyDdnsUpdater/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/gh/craigktreasure/SynologyDdnsUpdater/branch/main/graph/badge.svg?token=28F4PZLPN8)](https://codecov.io/gh/craigktreasure/SynologyDdnsUpdater)
+[![CI Build][ci-build-badge]][ci-build]
+[![codecov][codecov-badge]][codecov]
+[![Docker Image Version (tag latest semver)][docker-image-badge]][docker-image]
 
 This repository contains an ASP.NET Core application used to adapt [Namecheap][namecheap] DDNS update responses to
 something that a Synology [Customized DDNS Provider][synology-ddns] expects. This is done by calling the
@@ -50,6 +51,12 @@ You can follow the instructions [here][synology-ddns-update-service] to learn ho
 yourself.
 
 [brettterpstra-post]: https://brettterpstra.com/2021/08/26/custom-urls-for-your-synology-with-namecheap/ "Custom URLs for your Synology with Namecheap"
+[ci-build]: https://github.com/craigktreasure/SynologyDdnsUpdater/actions/workflows/CI.yml
+[ci-build-badge]: https://github.com/craigktreasure/SynologyDdnsUpdater/actions/workflows/CI.yml/badge.svg?branch=main
+[codecov]: https://codecov.io/gh/craigktreasure/SynologyDdnsUpdater
+[codecov-badge]: https://codecov.io/gh/craigktreasure/SynologyDdnsUpdater/branch/main/graph/badge.svg?token=28F4PZLPN8
+[docker-image]: https://hub.docker.com/r/craigktreasure/synologyddnsupdater "craigktreasure/synologyddnsupdater"
+[docker-image-badge]: https://img.shields.io/docker/v/craigktreasure/synologyddnsupdater/latest?label=craigktreasure%2Fsynologyddnsupdater
 [encodebudenet-post]: https://en.code-bude.net/2022/02/17/set-up-namecheap-com-ddns-in-synology-dsm/ "Set up Namecheap.com DDNS in Synology DSM"
 [namecheap]: https://namecheap.com "Namecheap"
 [namecheap-ddns-api]: https://www.namecheap.com/support/knowledgebase/article.aspx/29/11/how-to-dynamically-update-the-hosts-ip-with-an-http-request/ "How to dynamically update the host's IP with an HTTP request?"
