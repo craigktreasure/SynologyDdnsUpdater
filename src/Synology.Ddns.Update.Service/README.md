@@ -30,6 +30,8 @@ Make sure you've installed the following pre-requisites:
 
 > **Note**
 >
+> [![Docker Image Version (tag latest semver)][docker-image-badge]][docker-image]
+>
 > A prebuilt container image ([craigktreasure/synologyddnsupdater][docker-image]) is also available if you're
 > comfortable with that.
 
@@ -281,6 +283,7 @@ that includes an https port.
 [docker]: https://www.docker.com/ "Docker"
 [docker-desktop]: https://www.docker.com/products/docker-desktop/ "Docker Desktop"
 [docker-image]: https://hub.docker.com/r/craigktreasure/synologyddnsupdater "craigktreasure/synologyddnsupdater"
+[docker-image-badge]: https://img.shields.io/docker/v/craigktreasure/synologyddnsupdater/latest?label=craigktreasure%2Fsynologyddnsupdater
 [dockerfile]: /src/Synology.Ddns.Update.Service/Dockerfile "Dockerfile"
 [dotnet-7-sdk-download]: https://dotnet.microsoft.com/en-us/download/dotnet/7.0 "Download .NET 7.0"
 [globalratelimiteroptions]: /src/Synology.Ddns.Update.Service/Options/GlobalRateLimiterOptions.cs "GlobalRateLimiterOptions.cs"
