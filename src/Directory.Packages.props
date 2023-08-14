@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
-    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.5.1" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.5.1" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
