@@ -46,10 +46,10 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Build container image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           file: src/Synology.Ddns.Update.Service/Dockerfile
           # relative path to the place where source code with Dockerfile is located
