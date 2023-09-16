@@ -1,5 +1,7 @@
 ﻿namespace Synology.Namecheap.Adapter.Library;
 
+using System.Text;
+
 internal static class SynologyDdnsResponses
 {
     public const string BadAuth = "badauth";
@@ -8,5 +10,5 @@ internal static class SynologyDdnsResponses
 
     public const string NoHost = "nohost";
 
-    public const string UnknownFormatter = "911 [{0}]";
+    public static readonly CompositeFormat UnknownFormatter = CompositeFormat.Parse("911 [{0}]");
 }

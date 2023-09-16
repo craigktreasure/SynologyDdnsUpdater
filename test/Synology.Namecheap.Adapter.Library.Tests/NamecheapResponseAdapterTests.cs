@@ -75,7 +75,7 @@ public class NamecheapResponseAdapterTests
             Command = "SETDNSHOST",
             Errors = new(),
             Language = "eng",
-            Responses = Array.Empty<NamecheapDdnsUpdateOperationResponse>(),
+            Responses = [],
             IPAddress = "127.0.0.1",
         };
 
@@ -110,6 +110,6 @@ public class NamecheapResponseAdapterTests
             },
             Language = "eng",
             ResponseCount = 1,
-            Responses = Array.Empty<NamecheapDdnsUpdateOperationResponse>(),
+            Responses = [],
         };
 }

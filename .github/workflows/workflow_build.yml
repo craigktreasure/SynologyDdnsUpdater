@@ -61,23 +61,23 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           name: codecov
-          directory: __test-results
+          directory: __artifacts/test-results
           fail_ci_if_error: true
           verbose: true
 
-      - name: Upload output artifact
+      - name: Upload publish artifact
         if: ${{ inputs.push }}
         uses: actions/upload-artifact@v3
         with:
-          name: __publish
-          path: __publish
+          name: publish
+          path: __artifacts/publish
 
       - name: Upload webapp_package artifact for deployment job
         if: ${{ inputs.push }}
         uses: actions/upload-artifact@v3
         with:
           name: webapp_package
-          path: __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
+          path: __artifacts/publish/Synology.Ddns.Update.Service/release
 
       - name: Set up Docker Buildx
         id: buildx
@@ -97,8 +97,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           file: src/Synology.Ddns.Update.Service/Dockerfile
-          # relative path to the place where source code with Dockerfile is located
-          context: __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
+          # relative path to published binary location
+          context: __artifacts/publish/Synology.Ddns.Update.Service/release
           # build-time arguments
           build-args: |
             finalStage=fromlocal
@@ -113,8 +113,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           file: src/Synology.Ddns.Update.Service/Dockerfile
-          # relative path to the place where source code with Dockerfile is located
-          context: __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
+          # relative path to published binary location
+          context: __artifacts/publish/Synology.Ddns.Update.Service/release
           # build-time arguments
           build-args: |
             finalStage=fromlocal

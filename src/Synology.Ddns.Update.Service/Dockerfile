@@ -1,6 +1,6 @@
 ﻿#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-ARG aspNetVersion=7.0
+ARG aspNetVersion=8.0
 ARG baseTag=${aspNetVersion}-cbl-mariner2.0-distroless
 ARG buildTag=${aspNetVersion}
 ARG appPath=./
@@ -25,6 +25,7 @@ FROM mcr.microsoft.com/dotnet/sdk:${buildTag} AS build
 
 WORKDIR /repo
 
+COPY [".editorconfig", "."]
 COPY ["Directory.Build.props", "."]
 COPY ["Directory.Packages.props", "."]
 COPY ["global.json", "."]
@@ -42,19 +43,19 @@ COPY . .
 
 WORKDIR "/repo/src/Synology.Ddns.Update.Service"
 
-RUN dotnet build "Synology.Ddns.Update.Service.csproj" -c Release
+RUN dotnet build "Synology.Ddns.Update.Service.csproj" -c Release /p:WithoutGitRepository=true
 
 # Condition: finalStage=frompublish
 FROM build AS publish
 
-RUN dotnet publish "Synology.Ddns.Update.Service.csproj" -c Release /p:UseAppHost=false
+RUN dotnet publish "Synology.Ddns.Update.Service.csproj" -c Release /p:WithoutGitRepository=true /p:UseAppHost=false
 
 # Condition: finalStage=frompublish
 FROM base AS frompublish
 
 WORKDIR /app
 
-COPY --from=publish /repo/__publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0 .
+COPY --from=publish /repo/__artifacts/publish/Synology.Ddns.Update.Service/release .
 
 # Condition: finalStage=fromlocal
 FROM base AS fromlocal

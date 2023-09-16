@@ -23,6 +23,6 @@ internal sealed class MockNamecheapDdnsClient : INamecheapDdnsClient
             IPAddress = ipAddress,
             Language = "eng",
             ResponseCount = 0,
-            Responses = Array.Empty<NamecheapDdnsUpdateOperationResponse>()
+            Responses = []
         });
 }
