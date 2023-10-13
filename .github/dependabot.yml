@@ -12,6 +12,16 @@ updates:
     - craigktreasure
   assignees:
     - craigktreasure
+  groups:
+    coverlet:
+      patterns:
+      - "coverlet*"
+    OpenTelemetry:
+      patterns:
+      - "OpenTelemetry*"
+    xunit:
+      patterns:
+      - "xunit*"
 
 - package-ecosystem: github-actions
   directory: "/"
