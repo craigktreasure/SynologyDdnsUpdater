@@ -1,0 +1,35 @@
+# A rolling build that periodically checks if there's a base container image update.
+# If there is, we perform another official build and deploy it using the latest
+# container image.
+name: Rolling
+
+on:
+  schedule:
+    - cron:  '35 9 * * *'
+
+jobs:
+  check:
+    name: Container Image Update Check
+    runs-on: ubuntu-latest
+    outputs:
+      needs-updating: ${{ steps.check.outputs.needs-updating }}
+    steps:
+      # https://github.com/lucacome/docker-image-update-checker
+      - name: Check if container update available
+        id: check
+        uses: lucacome/docker-image-update-checker@v1
+        with:
+          base-image: mcr.microsoft.com/dotnet/aspnet:7.0-cbl-mariner2.0-distroless
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/synologyddnsupdater:latest
+
+  build_rolling:
+    name: Build
+    needs: check
+    if: needs.check.outputs.needs-updating == 'true'
+    uses: ./.github/workflows/workflow_build.yml
+    secrets: inherit
+    with:
+      # build on feature branches, push only on main branch
+      push: ${{ github.ref == 'refs/heads/main' }}
+      # don't check format on CI builds due to common breaking changes in the .NET SDK
+      checkFormat: false
