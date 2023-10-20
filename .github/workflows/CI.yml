@@ -16,99 +16,19 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 jobs:
-  build:
-    name: 'Build SynologyDdnsUpdater'
-    runs-on: ubuntu-latest
-
-    if: "!contains(github.event.head_commit.message, 'ci skip')"
-
-    outputs:
-      package_version: ${{steps.version.outputs.package_version}}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 7.x
-
-      - name: Install dependencies
-        run: dotnet restore
-
-      - name: Install .NET tools
-        run: dotnet tool restore
-
-      - name: Set version
-        id: version
-        shell: pwsh
-        run: |
-          $packageVersion = dotnet nbgv get-version --variable NuGetPackageVersion
-          "container_version=$packageVersion" >> $env:GITHUB_ENV
-
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
-
-      - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
-
-      - name: Publish
-        run: dotnet publish --configuration Release --no-build src/Synology.Ddns.Update.Service
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          name: codecov
-          directory: __test-results
-          fail_ci_if_error: true
-          verbose: true
-
-      - name: Upload output artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: __publish
-          path: __publish
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          logout: true
-
-      # https://github.com/docker/build-push-action
-      - name: Build and push container image
-        uses: docker/build-push-action@v5
-        with:
-          file: src/Synology.Ddns.Update.Service/Dockerfile
-          # relative path to the place where source code with Dockerfile is located
-          context: __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
-          # build-time arguments
-          build-args: |
-            finalStage=fromlocal
-          # Note: tags has to be all lower-case
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/synologyddnsupdater:${{ env.container_version }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/synologyddnsupdater:latest
-          # build on feature branches, push only on main branch
-          push: ${{ github.ref == 'refs/heads/main' }}
-
-      - name: Upload webapp_package artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: webapp_package
-          path: __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
+  build_pr:
+    uses: ./.github/workflows/workflow_build.yml
+    secrets: inherit
+    with:
+      # build on feature branches, push only on main branch
+      push: ${{ github.ref == 'refs/heads/main' }}
+      # don't check format on CI builds due to common breaking changes in the .NET SDK
+      checkFormat: false
 
   deploy:
     name: 'Deploy SynologyDdnsUpdater'
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_pr
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
