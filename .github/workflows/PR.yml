@@ -1,4 +1,4 @@
-name: 'SynologyDdnsUpdater-PR'
+name: SynologyDdnsUpdater-PR
 
 on: pull_request
 
