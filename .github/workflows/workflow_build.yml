@@ -61,7 +61,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+        run: dotnet test --configuration Release --no-build --verbosity normal /p:CollectCoverage=true
 
       - name: Publish
         run: dotnet publish --configuration Release --no-build src/Synology.Ddns.Update.Service
