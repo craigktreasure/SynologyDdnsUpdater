@@ -5,7 +5,7 @@ name: Rolling
 
 on:
   schedule:
-    - cron:  '35 9 * * *'
+    - cron:  '10 * * * *'
 
 jobs:
   check:
@@ -14,10 +14,10 @@ jobs:
     outputs:
       needs-updating: ${{ steps.check.outputs.needs-updating }}
     steps:
-      # https://github.com/lucacome/docker-image-update-checker
+      # https://github.com/giggio/docker-image-update-checker
       - name: Check if container update available
         id: check
-        uses: lucacome/docker-image-update-checker@v1
+        uses: giggio/docker-image-update-checker@v2
         with:
           base-image: mcr.microsoft.com/dotnet/aspnet:7.0-cbl-mariner2.0-distroless
           image: ${{ secrets.DOCKERHUB_USERNAME }}/synologyddnsupdater:latest
