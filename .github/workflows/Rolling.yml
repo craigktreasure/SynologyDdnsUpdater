@@ -10,18 +10,10 @@ on:
 jobs:
   check:
     name: Container Image Update Check
-    runs-on: ubuntu-latest
-    outputs:
-      needs-updating: ${{ steps.check.outputs.needs-updating }}
-    steps:
-      # https://github.com/giggio/docker-image-update-checker
-      - name: Check if container update available
-        id: check
-        uses: giggio/docker-image-update-checker@v2
-        with:
-          base-image: mcr.microsoft.com/dotnet/aspnet:7.0-cbl-mariner2.0-distroless
-          image: ${{ secrets.DOCKERHUB_USERNAME }}/synologyddnsupdater:latest
-          os: linux
+    uses: ./.github/workflows/workflow_image-update-check.yml
+    with:
+      base-image: mcr.microsoft.com/dotnet/aspnet:7.0-cbl-mariner2.0-distroless
+      image: craigktreasure/synologyddnsupdater:latest
 
   build_rolling:
     name: Build

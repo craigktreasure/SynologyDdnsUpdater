@@ -1,0 +1,33 @@
+name: Check for image updates
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        type: string
+        required: true
+        description: The container image to verify against the base image.
+      base-image:
+        type: string
+        required: true
+        description: The container base image.
+    outputs:
+      needs-updating:
+        description: Whether the image needs updating.
+        value: ${{ jobs.image-update-check.steps.update-check.outputs.needsBaseUpdate }}
+
+jobs:
+  image-update-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check base image
+        id: update-check
+        shell: pwsh
+        run: |
+          $imageNeedsUpdate = ./scripts/CheckImageNeedsBaseUpdate.ps1 -Image ${{ inputs.image }} -BaseImage ${{ inputs.base-image }} -CheckDateCreated
+          "needsBaseUpdate=$imageNeedsUpdate" >> $env:GITHUB_ENV
