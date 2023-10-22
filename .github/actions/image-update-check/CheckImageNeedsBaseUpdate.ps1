@@ -13,9 +13,11 @@ If specified, the image creation date will be checked to ensure the image was cr
 #>
 [CmdletBinding()]
 param (
-    [string] $BaseImageName = 'mcr.microsoft.com/dotnet/aspnet:7.0-cbl-mariner2.0-distroless',
+    [Parameter(Mandatory = $true)]
+    [string] $BaseImageName,
 
-    [string] $ImageName = 'craigktreasure/synologyddnsupdater:latest',
+    [Parameter(Mandatory = $true)]
+    [string] $ImageName,
 
     [switch] $CheckDateCreated
 )

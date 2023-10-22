@@ -14,7 +14,7 @@ on:
     outputs:
       needs-updating:
         description: Whether the image needs updating.
-        value: ${{ jobs.image-update-check.steps.update-check.outputs.needsBaseUpdate }}
+        value: ${{ jobs.image-update-check.steps.update-check.outputs.needs-updating }}
 
 jobs:
   image-update-check:
@@ -27,7 +27,7 @@ jobs:
 
       - name: Check base image
         id: update-check
-        shell: pwsh
-        run: |
-          $imageNeedsUpdate = ./scripts/CheckImageNeedsBaseUpdate.ps1 -Image ${{ inputs.image }} -BaseImage ${{ inputs.base-image }} -CheckDateCreated
-          "needsBaseUpdate=$imageNeedsUpdate" >> $env:GITHUB_ENV
+        uses: ./.github/actions/image-update-check
+        with:
+          base-image: ${{ inputs.base-image }}
+          image: ${{ inputs.image }}

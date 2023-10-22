@@ -1,0 +1,25 @@
+name: Check for image updates
+
+inputs:
+  image:
+    type: string
+    required: true
+    description: The container image to verify against the base image.
+  base-image:
+    type: string
+    required: true
+    description: The container base image.
+outputs:
+  needs-updating:
+    description: Whether the image needs updating.
+    value: ${{ steps.update-check.outputs.needsBaseUpdate }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check base image
+      id: update-check
+      shell: pwsh
+      run: |
+        $imageNeedsUpdate = ${{ github.action_path }}/CheckImageNeedsBaseUpdate.ps1 -Image ${{ inputs.image }} -BaseImage ${{ inputs.base-image }} -CheckDateCreated
+        "needsBaseUpdate=$imageNeedsUpdate" >> $env:GITHUB_ENV
