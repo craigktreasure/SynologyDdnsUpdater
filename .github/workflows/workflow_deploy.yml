@@ -1,4 +1,4 @@
-name: Reusable deployment workflow for SynologyDdnsUpdater
+name: Deploy to Azure Web App
 
 on:
   workflow_call:
