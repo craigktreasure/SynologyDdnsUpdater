@@ -1,10 +1,10 @@
-name: SynologyDdnsUpdater-PR
+name: PR
 
 on: pull_request
 
 jobs:
   build_pr:
-    name: SynologyDdnsUpdater PR Build
+    name: Build
     uses: ./.github/workflows/workflow_build.yml
     secrets: inherit
     with:

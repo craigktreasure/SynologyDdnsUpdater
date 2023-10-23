@@ -1,4 +1,4 @@
-name: SynologyDdnsUpdater-CI
+name: CI
 
 on:
   push:
@@ -13,7 +13,7 @@ on:
 
 jobs:
   build_ci:
-    name: SynologyDdnsUpdater CI Build
+    name: Build
     uses: ./.github/workflows/workflow_build.yml
     secrets: inherit
     with:
@@ -23,7 +23,7 @@ jobs:
       checkFormat: false
 
   deploy_ci:
-    name: SynologyDdnsUpdater CI Deploy
+    name: Deploy app to Azure
     needs: build_ci
     uses: ./.github/workflows/workflow_deploy.yml
     secrets: inherit

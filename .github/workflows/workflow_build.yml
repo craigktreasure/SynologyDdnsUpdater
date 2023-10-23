@@ -1,4 +1,4 @@
-name: Reusable build workflow for SynologyDdnsUpdater
+name: Build SynologyDdnsUpdater
 
 on:
   workflow_call:
@@ -34,26 +34,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 7.x
+      - name: Install tools
+        uses: ./.github/actions/install-tools
 
-      - name: Install dependencies
+      - name: Set version variables
+        id: version
+        uses: ./.github/actions/version-vars
+
+      - name: Restore
         run: dotnet restore
 
-      - name: Install .NET tools
-        run: dotnet tool restore
-
-      - name: Set version
-        id: version
-        shell: pwsh
-        run: |
-          $packageVersion = dotnet nbgv get-version --variable NuGetPackageVersion
-          "container_version=$packageVersion" >> $env:GITHUB_ENV
-          "package_version=$packageVersion" >> $env:GITHUB_ENV
-
-      - name: DotNet Format
+      - name: Format validation
         if: ${{ inputs.checkFormat }}
         run: dotnet format --no-restore --verify-no-changes
 
@@ -64,7 +55,7 @@ jobs:
         run: dotnet test --configuration Release --no-build --verbosity normal /p:CollectCoverage=true
 
       - name: Publish
-        run: dotnet publish --configuration Release --no-build src/Synology.Ddns.Update.Service
+        run: dotnet publish --configuration Release --no-build
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -80,6 +71,13 @@ jobs:
         with:
           name: __publish
           path: __publish
+
+      - name: Upload webapp_package artifact for deployment job
+        if: ${{ inputs.push }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: webapp_package
+          path: __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
 
       - name: Set up Docker Buildx
         id: buildx
@@ -126,10 +124,3 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/synologyddnsupdater:latest
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
-
-      - name: Upload webapp_package artifact for deployment job
-        if: ${{ inputs.push }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: webapp_package
-          path: __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
