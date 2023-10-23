@@ -1,4 +1,4 @@
-name: PR
+name: PR (Buddy)
 
 on: pull_request
 

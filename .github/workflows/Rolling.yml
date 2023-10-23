@@ -1,7 +1,7 @@
 # A rolling build that periodically checks if there's a base container image update.
 # If there is, we perform another official build and deploy it using the latest
 # container image.
-name: Rolling
+name: Rolling (Official)
 
 on:
   schedule:
