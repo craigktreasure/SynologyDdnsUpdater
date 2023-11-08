@@ -33,7 +33,7 @@ function CheckLastExitCode($message) {
 
 function PullImage($imageName) {
     Write-Host "Pulling image $imageName..." -ForegroundColor Magenta
-    docker pull $imageName
+    docker pull $imageName | Out-Host
     CheckLastExitCode "Failed to pull image $imageName"
 }
 
