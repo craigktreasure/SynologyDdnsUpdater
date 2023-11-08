@@ -11,7 +11,7 @@ inputs:
     description: The container base image.
 outputs:
   needs-updating:
-    description: Whether the image needs updating.
+    description: Whether the base image needs updating. Either `true` or `false`.
     value: ${{ steps.update-check.outputs.needsBaseUpdate }}
 
 runs:
@@ -22,4 +22,5 @@ runs:
       shell: pwsh
       run: |
         $imageNeedsUpdate = ${{ github.action_path }}/CheckImageNeedsBaseUpdate.ps1 -Image ${{ inputs.image }} -BaseImage ${{ inputs.base-image }} -CheckDateCreated
-        "needsBaseUpdate=$imageNeedsUpdate" >> $env:GITHUB_ENV
+        Write-Host "needsBaseUpdate=$($imageNeedsUpdate.ToString().ToLower())"
+        "needsBaseUpdate=$($imageNeedsUpdate.ToString().ToLower())" >> $env:GITHUB_OUTPUT

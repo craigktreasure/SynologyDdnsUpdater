@@ -9,14 +9,24 @@ on:
 
 jobs:
   check:
-    name: Container Image Update Check
-    uses: ./.github/workflows/workflow_image-update-check.yml
-    with:
-      base-image: mcr.microsoft.com/dotnet/aspnet:7.0-cbl-mariner2.0-distroless
-      image: craigktreasure/synologyddnsupdater:latest
+    name: Rolling check
+    runs-on: ubuntu-latest
+    outputs:
+      needs-updating: ${{ steps.update-check.outputs.needs-updating }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Container Image Update Check
+        id: update-check
+        uses: ./.github/actions/image-update-check
+        with:
+          base-image: mcr.microsoft.com/dotnet/aspnet:7.0-cbl-mariner2.0-distroless
+          image: craigktreasure/synologyddnsupdater:latest
 
   build_rolling:
-    name: Build
+    name: Rolling Build
     needs: check
     if: needs.check.outputs.needs-updating == 'true'
     uses: ./.github/workflows/workflow_build.yml

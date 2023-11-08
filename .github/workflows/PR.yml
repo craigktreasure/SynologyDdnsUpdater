@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   build_pr:
-    name: Build
+    name: PR Build
     uses: ./.github/workflows/workflow_build.yml
     secrets: inherit
     with:
