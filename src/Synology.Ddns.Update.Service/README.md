@@ -71,7 +71,7 @@ To build the service using the host:
 ```bash
 # From the root of the repository
 dotnet publish ./src/Synology.Ddns.Update.Service -c Release
-docker build -f ./src/Synology.Ddns.Update.Service/Dockerfile --build-arg finalStage=fromlocal --force-rm -t synologyddnsupdater:local __publish/Release/AnyCPU/src/Synology.Ddns.Update.Service/net7.0
+docker build -f ./src/Synology.Ddns.Update.Service/Dockerfile --build-arg finalStage=fromlocal --force-rm -t synologyddnsupdater:local __artifacts/publish/Synology.Ddns.Update.Service/release
 ```
 
 This method will build the service application on the host machine and then use those bits to produce the container.

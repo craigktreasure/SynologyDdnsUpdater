@@ -13,7 +13,8 @@ using Namecheap.Library.Models;
 /// </summary>
 public class NamecheapDdnsClient : INamecheapDdnsClient, IDisposable
 {
-    private const string endpointFormat = "https://dynamicdns.park-your-domain.com/update?host={0}&domain={1}&password={2}&ip={3}";
+    private static readonly CompositeFormat EndpointFormat = CompositeFormat.Parse(
+        "https://dynamicdns.park-your-domain.com/update?host={0}&domain={1}&password={2}&ip={3}");
 
     private readonly HttpClient httpClient;
 
@@ -94,7 +95,7 @@ public class NamecheapDdnsClient : INamecheapDdnsClient, IDisposable
     {
         string endpoint = string.Format(
             CultureInfo.InvariantCulture,
-            endpointFormat,
+            EndpointFormat,
             HttpUtility.UrlEncode(host),
             HttpUtility.UrlEncode(domainName),
             HttpUtility.UrlEncode(ddnsPassword),
