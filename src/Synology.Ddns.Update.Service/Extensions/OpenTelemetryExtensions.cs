@@ -5,8 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Web;
 
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+
 using Microsoft.Extensions.Primitives;
 
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -41,7 +44,7 @@ internal static class OpenTelemetryExtensions
                 serviceInstanceId: Environment.MachineName);
         }
 
-        builder.Services
+        OpenTelemetryBuilder openTelemetryBuilder = builder.Services
             .AddOpenTelemetry()
             .ConfigureResource(configureResource)
             .WithTracing(builder =>
@@ -66,6 +69,11 @@ internal static class OpenTelemetryExtensions
                     .AddHttpClientInstrumentation()
                     .AddAspNetCoreInstrumentation();
             });
+
+        if (monitoringOptions.AzureMonitorEnabled)
+        {
+            openTelemetryBuilder.UseAzureMonitor();
+        }
 
         // Clear default logging providers used by WebApplication host.
         builder.Logging.ClearProviders();
