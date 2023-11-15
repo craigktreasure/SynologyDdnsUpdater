@@ -8,6 +8,12 @@ internal class MonitoringOptions
     public const string SectionName = nameof(MonitoringOptions);
 
     /// <summary>
+    /// Gets or sets a value indicating whether Azure Monitor should be enabled.
+    /// Requires that <see cref="OpenTelemetryEnabled"/> is also enabled.
+    /// </summary>
+    public bool AzureMonitorEnabled { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether OpenTelemetry should be enabled.
     /// </summary>
     public bool OpenTelemetryEnabled { get; set; }
