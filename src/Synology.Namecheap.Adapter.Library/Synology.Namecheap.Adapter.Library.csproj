@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="$(ProjectName).Tests" />
     <InternalsVisibleTo Include="Synology.Ddns.Update.Service.ScenarioTests" />
     <InternalsVisibleTo Include="Synology.Ddns.Update.Service.Tests" />
   </ItemGroup>

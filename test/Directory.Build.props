@@ -1,5 +1,8 @@
 <Project>
   <PropertyGroup>
+    <!-- Enable test only packages. -->
+    <TestOnlyPackagesEnabled>true</TestOnlyPackagesEnabled>
+
     <!-- Don't publish test projects by default. -->
     <IsPublishable>false</IsPublishable>
 
