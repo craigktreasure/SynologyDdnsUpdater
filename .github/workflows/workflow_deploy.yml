@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Download webapp_package artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: webapp_package
           path: webapp_package
