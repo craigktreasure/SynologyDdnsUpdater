@@ -6,7 +6,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerDefaultDockerfile>Dockerfile</DockerDefaultDockerfile>
     <DockerDefaultTag>synologyddnsupdater</DockerDefaultTag>
-    <DockerfileBuildArguments Condition=" '$(Configuration)' == 'Debug' ">--build-arg baseTag=7.0</DockerfileBuildArguments>
+    <DockerfileBuildArguments Condition=" '$(Configuration)' == 'Debug' ">--build-arg baseTag=8.0</DockerfileBuildArguments>
     <DockerfileContext>..\..</DockerfileContext>
 
     <NoWarn>$(NoWarn);SYSLIB1006</NoWarn>
