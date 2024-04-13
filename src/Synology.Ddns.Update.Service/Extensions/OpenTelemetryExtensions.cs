@@ -44,6 +44,7 @@ internal static class OpenTelemetryExtensions
                 serviceInstanceId: Environment.MachineName);
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         OpenTelemetryBuilder openTelemetryBuilder = builder.Services
             .AddOpenTelemetry()
             .ConfigureResource(configureResource)
@@ -69,6 +70,7 @@ internal static class OpenTelemetryExtensions
                     .AddHttpClientInstrumentation()
                     .AddAspNetCoreInstrumentation();
             });
+#pragma warning restore CS0618 // Type or member is obsolete
 
         if (monitoringOptions.AzureMonitorEnabled)
         {
