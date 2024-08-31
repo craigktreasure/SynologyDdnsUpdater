@@ -25,7 +25,7 @@
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.7.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.7.3" />
     <PackageVersion Include="Treasure.Utils.Argument" Version="1.1.0" />
   </ItemGroup>
 
