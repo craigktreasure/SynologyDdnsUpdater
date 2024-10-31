@@ -23,8 +23,9 @@ jobs:
       # don't check format on CI builds due to common breaking changes in the .NET SDK
       checkFormat: false
 
-  deploy_ci:
-    name: Deploy app to Azure
-    needs: build_ci
-    uses: ./.github/workflows/workflow_deploy.yml
-    secrets: inherit
+  # Disabled until Azure App Service supports .NET 9 RC2+
+  # deploy_ci:
+  #   name: Deploy app to Azure
+  #   needs: build_ci
+  #   uses: ./.github/workflows/workflow_deploy.yml
+  #   secrets: inherit
