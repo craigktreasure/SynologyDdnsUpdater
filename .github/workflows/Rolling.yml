@@ -22,7 +22,7 @@ jobs:
         id: update-check
         uses: ./.github/actions/image-update-check
         with:
-          base-image: mcr.microsoft.com/dotnet/aspnet:8.0-cbl-mariner2.0-distroless
+          base-image: mcr.microsoft.com/dotnet/aspnet:9.0-azurelinux3.0-distroless
           image: craigktreasure/synologyddnsupdater:latest
 
   build_rolling:

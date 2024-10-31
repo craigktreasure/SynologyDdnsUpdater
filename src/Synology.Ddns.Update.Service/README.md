@@ -26,7 +26,7 @@ Make sure you've installed the following pre-requisites:
 
 - [Docker][docker]
   - [Docker Desktop][docker-desktop] recommended
-- [.NET 7.0 SDK][dotnet-7-sdk-download]
+- [.NET 9.0 SDK][dotnet-9-sdk-download]
 
 > **Note**
 >
@@ -214,7 +214,7 @@ Make sure you've installed the following pre-requisites:
 
 - [Docker][docker]
   - [Docker Desktop][docker-desktop] recommended
-- [.NET 7.0 SDK][dotnet-7-sdk-download]
+- [.NET 9.0 SDK][dotnet-9-sdk-download]
 
 All commands are expected to be run from the root of the repository. You'll also find that these instructions were
 derived from [these docs][aspnetcore-docker-https].
@@ -285,7 +285,7 @@ that includes an https port.
 [docker-image]: https://hub.docker.com/r/craigktreasure/synologyddnsupdater "craigktreasure/synologyddnsupdater"
 [docker-image-badge]: https://img.shields.io/docker/v/craigktreasure/synologyddnsupdater/latest?label=craigktreasure%2Fsynologyddnsupdater
 [dockerfile]: /src/Synology.Ddns.Update.Service/Dockerfile "Dockerfile"
-[dotnet-7-sdk-download]: https://dotnet.microsoft.com/en-us/download/dotnet/7.0 "Download .NET 7.0"
+[dotnet-9-sdk-download]: https://dotnet.microsoft.com/download/dotnet/9.0 "Download .NET 9.0"
 [globalratelimiteroptions]: /src/Synology.Ddns.Update.Service/Options/GlobalRateLimiterOptions.cs "GlobalRateLimiterOptions.cs"
 [opentelemetry]: https://opentelemetry.io/ "OpenTelemetry"
 [create-pfx-openssl]: https://www.ssl.com/how-to/create-a-pfx-p12-certificate-file-using-openssl/ "Create a .pfx/.p12 Certificate File Using OpenSSL"

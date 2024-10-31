@@ -1,6 +1,7 @@
 ﻿namespace Synology.Ddns.Update.Service.Controllers;
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Metrics;
 
 using global::Namecheap.Library;
@@ -18,6 +19,7 @@ using Synology.Namecheap.Adapter.Library;
 /// <seealso cref="ControllerBase" />
 [ApiController]
 [Route("namecheap/ddns")]
+[SuppressMessage("Maintainability", "CA1515:Consider making public types internal", Justification = "Analyzer bug.")]
 public class NamecheapDdnsController : ControllerBase
 {
     private static readonly Counter<long> namecheapDdnsUpdateCounter = Telemetry.Meter.CreateCounter<long>("NamecheapDdnsUpdate");

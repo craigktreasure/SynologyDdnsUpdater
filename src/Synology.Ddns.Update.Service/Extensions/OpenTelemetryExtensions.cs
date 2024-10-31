@@ -105,7 +105,8 @@ internal static class OpenTelemetryExtensions
         if (hasIp || hasPassword)
         {
             // The request.Host contains host:port.
-            string[] hostParts = request.Host.Value.Split(":");
+            string[] hostParts = request.Host.Value?.Split(":")
+                ?? throw new InvalidOperationException($"The request.host contained null value.");
 
             if (hostParts.Length != 2)
             {
