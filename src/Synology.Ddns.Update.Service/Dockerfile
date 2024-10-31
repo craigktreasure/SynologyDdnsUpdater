@@ -1,7 +1,8 @@
 ﻿#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-ARG aspNetVersion=8.0
-ARG baseTag=${aspNetVersion}-cbl-mariner2.0-distroless
+ARG aspNetVersion=9.0
+# https://mcr.microsoft.com/en-us/product/dotnet/aspnet/tags
+ARG baseTag=${aspNetVersion}-azurelinux3.0-distroless
 ARG buildTag=${aspNetVersion}
 ARG appPath=./
 
