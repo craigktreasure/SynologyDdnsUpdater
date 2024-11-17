@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="Treasure.Utils" />
-  </ItemGroup>
-
-  <ItemGroup>
     <InternalsVisibleTo Include="Synology.Ddns.Update.Service.ScenarioTests" />
     <InternalsVisibleTo Include="Synology.Ddns.Update.Service.Tests" />
   </ItemGroup>

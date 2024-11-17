@@ -32,11 +32,14 @@ public class NamecheapDdnsController : ControllerBase
     /// Initializes a new instance of the <see cref="NamecheapDdnsController"/> class.
     /// </summary>
     /// <param name="logger">The logger.</param>
-    /// <param name="namecheapDdnsClient">The namecheap DDNS client.</param>
+    /// <param name="namecheapDdnsClient">The Namecheap DDNS client.</param>
     public NamecheapDdnsController(ILogger<NamecheapDdnsController> logger, INamecheapDdnsClient namecheapDdnsClient)
     {
-        this.logger = Argument.NotNull(logger);
-        this.namecheapDdnsClient = Argument.NotNull(namecheapDdnsClient);
+        ArgumentNullException.ThrowIfNull(logger);
+        ArgumentNullException.ThrowIfNull(namecheapDdnsClient);
+
+        this.logger = logger;
+        this.namecheapDdnsClient = namecheapDdnsClient;
     }
 
     /// <summary>

@@ -4,12 +4,4 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Using Include="Treasure.Utils" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Treasure.Utils.Argument" />
-  </ItemGroup>
-
 </Project>
