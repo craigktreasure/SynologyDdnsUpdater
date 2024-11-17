@@ -25,7 +25,11 @@ public class NamecheapDdnsClient : INamecheapDdnsClient, IDisposable
     /// </summary>
     /// <param name="httpClient">The HTTP client.</param>
     public NamecheapDdnsClient(HttpClient httpClient)
-        => this.httpClient = Argument.NotNull(httpClient);
+    {
+        ArgumentNullException.ThrowIfNull(httpClient);
+
+        this.httpClient = httpClient;
+    }
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -52,10 +56,10 @@ public class NamecheapDdnsClient : INamecheapDdnsClient, IDisposable
         string ipAddress,
         CancellationToken cancellationToken = default)
     {
-        Argument.NotNullOrWhiteSpace(host);
-        Argument.NotNullOrWhiteSpace(domainName);
-        Argument.NotNullOrWhiteSpace(ddnsPassword);
-        Argument.NotNullOrWhiteSpace(ipAddress);
+        ArgumentException.ThrowIfNullOrWhiteSpace(host);
+        ArgumentException.ThrowIfNullOrWhiteSpace(domainName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(ddnsPassword);
+        ArgumentException.ThrowIfNullOrWhiteSpace(ipAddress);
 
         Uri endpoint = FormatEndpointUrl(host, domainName, ddnsPassword, ipAddress);
 

@@ -19,7 +19,7 @@ public static class NamecheapResponseAdapter
     /// <returns><see cref="string"/>.</returns>
     public static string GetSynologyResponse(NamecheapDdnsUpdateResponse namecheapResponse)
     {
-        Argument.NotNull(namecheapResponse);
+        ArgumentNullException.ThrowIfNull(namecheapResponse);
 
         if (namecheapResponse.Success)
         {
