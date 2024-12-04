@@ -1,6 +1,6 @@
 ﻿namespace Synology.Ddns.Update.Service.Monitoring;
 
-using Synology.Ddns.Update.Service.Controllers;
+using Synology.Ddns.Update.Service.Endpoints;
 
 internal static partial class NamecheapDdnsLogging
 {
@@ -9,7 +9,7 @@ internal static partial class NamecheapDdnsLogging
         Level = LogLevel.Information,
         Message = "Updated IP address for {Host} {DomainName}")]
     public static partial void DdnsUpdated(
-        this ILogger<NamecheapDdnsController> logger,
+        this ILogger<NamecheapDdns> logger,
         string host,
         string domainName);
 
@@ -18,7 +18,7 @@ internal static partial class NamecheapDdnsLogging
         Level = LogLevel.Error,
         Message = "IP address update failed for {Host} {DomainName}.")]
     public static partial void DdnsUpdateError(
-        this ILogger<NamecheapDdnsController> logger,
+        this ILogger<NamecheapDdns> logger,
         string host,
         string domainName,
         Exception exception);
@@ -28,7 +28,7 @@ internal static partial class NamecheapDdnsLogging
         Level = LogLevel.Warning,
         Message = "IP address update failed for {Host} {DomainName} with {Result}.")]
     public static partial void DdnsUpdateFailed(
-        this ILogger<NamecheapDdnsController> logger,
+        this ILogger<NamecheapDdns> logger,
         string host,
         string domainName,
         string result);
@@ -38,7 +38,7 @@ internal static partial class NamecheapDdnsLogging
         Level = LogLevel.Information,
         Message = "Updating IP address for {Host} {DomainName}")]
     public static partial void DdnsUpdating(
-        this ILogger<NamecheapDdnsController> logger,
+        this ILogger<NamecheapDdns> logger,
         string host,
         string domainName);
 }

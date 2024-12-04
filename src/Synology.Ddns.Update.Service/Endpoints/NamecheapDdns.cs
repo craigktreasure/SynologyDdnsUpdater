@@ -1,8 +1,7 @@
-﻿namespace Synology.Ddns.Update.Service.Controllers;
+﻿namespace Synology.Ddns.Update.Service.Endpoints;
 
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Metrics;
 
 using global::Namecheap.Library;
@@ -13,39 +12,15 @@ using Microsoft.AspNetCore.Mvc;
 using Synology.Ddns.Update.Service.Monitoring;
 using Synology.Namecheap.Adapter.Library;
 
-/// <summary>
-/// Represents an API controller that performs Namecheap DDNS updates.
-/// Implements the <see cref="ControllerBase" />
-/// </summary>
-/// <seealso cref="ControllerBase" />
-[ApiController]
-[Route("namecheap/ddns")]
-[SuppressMessage("Maintainability", "CA1515:Consider making public types internal", Justification = "Analyzer bug.")]
-public class NamecheapDdnsController : ControllerBase
+internal class NamecheapDdns
 {
     private static readonly Counter<long> namecheapDdnsUpdateCounter = Telemetry.Meter.CreateCounter<long>("NamecheapDdnsUpdate");
-
-    private readonly ILogger<NamecheapDdnsController> logger;
-
-    private readonly INamecheapDdnsClient namecheapDdnsClient;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NamecheapDdnsController"/> class.
-    /// </summary>
-    /// <param name="logger">The logger.</param>
-    /// <param name="namecheapDdnsClient">The Namecheap DDNS client.</param>
-    public NamecheapDdnsController(ILogger<NamecheapDdnsController> logger, INamecheapDdnsClient namecheapDdnsClient)
-    {
-        ArgumentNullException.ThrowIfNull(logger);
-        ArgumentNullException.ThrowIfNull(namecheapDdnsClient);
-
-        this.logger = logger;
-        this.namecheapDdnsClient = namecheapDdnsClient;
-    }
 
     /// <summary>
     /// Updates the specified host.
     /// </summary>
+    /// <param name="logger">The logger.</param>
+    /// <param name="namecheapDdnsClient">The Namecheap DDNS client.</param>
     /// <param name="host">The host.</param>
     /// <param name="domainName">The name of the domain.</param>
     /// <param name="ddnsPassword">The DDNS password.</param>
@@ -53,7 +28,9 @@ public class NamecheapDdnsController : ControllerBase
     /// <returns><see cref="string"/>.</returns>
     [HttpGet("update", Name = "Update")]
     [EndpointSummary("Updates the specified host.")]
-    public async Task<string> Update(
+    public static async Task<string> Update(
+        [FromServices] ILogger<NamecheapDdns> logger,
+        [FromServices] INamecheapDdnsClient namecheapDdnsClient,
         [Description("The host.")]
         [FromQuery(Name = "host")] string host,
         [Description("The name of the domain.")]
@@ -67,9 +44,9 @@ public class NamecheapDdnsController : ControllerBase
 
         try
         {
-            this.logger.DdnsUpdating(host, domainName);
+            logger.DdnsUpdating(host, domainName);
 
-            NamecheapDdnsUpdateResponse namecheapUpdateResponse = await this.namecheapDdnsClient.UpdateHostIpAddressAsync(host, domainName, ddnsPassword, ipAddress);
+            NamecheapDdnsUpdateResponse namecheapUpdateResponse = await namecheapDdnsClient.UpdateHostIpAddressAsync(host, domainName, ddnsPassword, ipAddress);
 
             string result = NamecheapResponseAdapter.GetSynologyResponse(namecheapUpdateResponse);
 
@@ -77,12 +54,12 @@ public class NamecheapDdnsController : ControllerBase
             if (namecheapUpdateResponse.Success)
             {
                 activity?.SetStatus(ActivityStatusCode.Ok, result);
-                this.logger.DdnsUpdated(host, domainName);
+                logger.DdnsUpdated(host, domainName);
             }
             else
             {
                 activity?.SetStatus(ActivityStatusCode.Error, result);
-                this.logger.DdnsUpdateFailed(host, domainName, result);
+                logger.DdnsUpdateFailed(host, domainName, result);
             }
 
             return result;
@@ -90,7 +67,7 @@ public class NamecheapDdnsController : ControllerBase
         catch (Exception ex)
         {
             activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            this.logger.DdnsUpdateError(host, domainName, ex);
+            logger.DdnsUpdateError(host, domainName, ex);
             throw;
         }
     }

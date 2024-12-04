@@ -31,7 +31,6 @@ internal sealed class Program
 
         builder.AddOpenTelemetry();
         builder.Services.AddCustomRateLimiter(builder.Configuration);
-        builder.Services.AddControllers();
         builder.Services.AddOpenApi();
         builder.Services.AddNamecheapDdnsClient(builder.Configuration);
 
@@ -48,9 +47,8 @@ internal sealed class Program
         }
 
         app.UseHttpsRedirection();
-        app.UseAuthorization();
         app.UseRateLimiter();
-        app.MapControllers();
+        app.MapEndpoints();
         app.Run();
     }
 }
