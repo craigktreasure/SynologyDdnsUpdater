@@ -30,17 +30,9 @@ internal sealed class Program
         // Add services to the container.
 
         builder.AddOpenTelemetry();
-
         builder.Services.AddCustomRateLimiter(builder.Configuration);
-
         builder.Services.AddControllers();
-
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(options =>
-        {
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, ThisAssembly.AssemblyName + ".xml"));
-        });
+        builder.Services.AddOpenApi();
         builder.Services.AddNamecheapDdnsClient(builder.Configuration);
 
         WebApplication app = builder.Build();
@@ -48,18 +40,17 @@ internal sealed class Program
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app.MapOpenApi();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/openapi/v1.json", "Synology DDNS Update Service API");
+            });
         }
 
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
-
         app.UseRateLimiter();
-
         app.MapControllers();
-
         app.Run();
     }
 }
