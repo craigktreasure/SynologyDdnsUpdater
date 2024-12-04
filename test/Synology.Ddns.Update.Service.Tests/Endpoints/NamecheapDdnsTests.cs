@@ -1,4 +1,4 @@
-﻿namespace Synology.Ddns.Update.Service.Tests.Controllers;
+﻿namespace Synology.Ddns.Update.Service.Tests.Endpoints;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
@@ -9,7 +9,7 @@ using global::Namecheap.Library;
 
 using Microsoft.Extensions.Logging;
 
-using Synology.Ddns.Update.Service.Controllers;
+using Synology.Ddns.Update.Service.Endpoints;
 using Synology.Namecheap.Adapter.Library;
 
 using Test.Library;
@@ -17,25 +17,11 @@ using Test.Library.Namecheap;
 
 using Xunit.Abstractions;
 
-public class NamecheapDdnsControllerTests
+public class NamecheapDdnsTests
 {
     private readonly ITestOutputHelper testOutputHelper;
 
-    public NamecheapDdnsControllerTests(ITestOutputHelper testOutputHelper) => this.testOutputHelper = testOutputHelper;
-
-    [Fact]
-    public void Constructor()
-    {
-        // Arrange
-        ILogger<NamecheapDdnsController> logger = this.testOutputHelper.BuildLoggerFor<NamecheapDdnsController>();
-        INamecheapDdnsClient namecheapDdnsClient = new MockNamecheapDdnsClient();
-
-        // Act and assert
-        _ = new NamecheapDdnsController(logger, namecheapDdnsClient);
-
-        Assert.Throws<ArgumentNullException>(nameof(logger), () => new NamecheapDdnsController(null!, namecheapDdnsClient));
-        Assert.Throws<ArgumentNullException>(nameof(namecheapDdnsClient), () => new NamecheapDdnsController(logger, null!));
-    }
+    public NamecheapDdnsTests(ITestOutputHelper testOutputHelper) => this.testOutputHelper = testOutputHelper;
 
     [Theory]
     [InlineData(SynologyDdnsResponses.NoHost, MockResponseConstants.DomainNameNotFound)]
@@ -47,16 +33,15 @@ public class NamecheapDdnsControllerTests
     public async Task Update(string expectedResponse, string clientResponse)
     {
         // Arrange
-        ILogger<NamecheapDdnsController> logger = this.testOutputHelper.BuildLoggerFor<NamecheapDdnsController>();
+        ILogger<NamecheapDdns> logger = this.testOutputHelper.BuildLoggerFor<NamecheapDdns>();
         using NamecheapDdnsClient namecheapDdnsClient = BuildMockedClient(clientResponse);
-        NamecheapDdnsController controller = new(logger, namecheapDdnsClient);
         const string host = "@";
         const string domain = "mydomain.com";
         const string password = "secret";
         const string ip = "127.0.0.1";
 
         // Act
-        string result = await controller.Update(host, domain, password, ip);
+        string result = await NamecheapDdns.Update(logger, namecheapDdnsClient, host, domain, password, ip);
 
         // Assert
         Assert.Equal(expectedResponse, result);
@@ -66,16 +51,15 @@ public class NamecheapDdnsControllerTests
     public async Task Update_WithClientException()
     {
         // Arrange
-        ILogger<NamecheapDdnsController> logger = this.testOutputHelper.BuildLoggerFor<NamecheapDdnsController>();
+        ILogger<NamecheapDdns> logger = this.testOutputHelper.BuildLoggerFor<NamecheapDdns>();
         using NamecheapDdnsClient namecheapDdnsClient = BuildMockedClient(_ => throw new InvalidOperationException());
-        NamecheapDdnsController controller = new(logger, namecheapDdnsClient);
         const string host = "@";
         const string domain = "mydomain.com";
         const string password = "secret";
         const string ip = "127.0.0.1";
 
         // Act
-        await Assert.ThrowsAsync<InvalidOperationException>(() => controller.Update(host, domain, password, ip));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => NamecheapDdns.Update(logger, namecheapDdnsClient, host, domain, password, ip));
     }
 
     private static NamecheapDdnsClient BuildMockedClient(string responseContent = MockResponseConstants.Success)
