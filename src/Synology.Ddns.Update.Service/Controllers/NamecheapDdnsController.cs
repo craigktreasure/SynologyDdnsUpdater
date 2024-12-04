@@ -1,5 +1,6 @@
 ﻿namespace Synology.Ddns.Update.Service.Controllers;
 
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Metrics;
@@ -51,10 +52,15 @@ public class NamecheapDdnsController : ControllerBase
     /// <param name="ipAddress">The ip address.</param>
     /// <returns><see cref="string"/>.</returns>
     [HttpGet("update", Name = "Update")]
+    [EndpointSummary("Updates the specified host.")]
     public async Task<string> Update(
+        [Description("The host.")]
         [FromQuery(Name = "host")] string host,
+        [Description("The name of the domain.")]
         [FromQuery(Name = "domain")] string domainName,
+        [Description("The DDNS password.")]
         [FromQuery(Name = "password")] string ddnsPassword,
+        [Description("The ip address.")]
         [FromQuery(Name = "ip")] string ipAddress)
     {
         using Activity? activity = Telemetry.ActivitySource.StartActivity("NamecheapDdnsUpdate");
