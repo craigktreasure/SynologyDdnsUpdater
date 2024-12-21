@@ -9,8 +9,6 @@ using Microsoft.Extensions.Logging;
 
 using Test.Library;
 
-using Xunit.Abstractions;
-
 using SendAction = Func<HttpRequestMessage, HttpResponseMessage>;
 
 internal sealed class TestWebAppFactory : WebApplicationFactory<Program>

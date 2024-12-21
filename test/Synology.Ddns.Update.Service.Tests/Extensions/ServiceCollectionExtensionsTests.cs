@@ -46,7 +46,7 @@ public class ServiceCollectionExtensionsTests
         };
 
         // Act
-        RateLimitLease lease = await options.GlobalLimiter.AcquireAsync(httpContext);
+        RateLimitLease lease = await options.GlobalLimiter.AcquireAsync(httpContext, cancellationToken: TestContext.Current.CancellationToken);
 
         // Arrange
         OnRejectedContext context = new()
@@ -56,7 +56,7 @@ public class ServiceCollectionExtensionsTests
         };
 
         // Act
-        await options.OnRejected(context, default);
+        await options.OnRejected(context, TestContext.Current.CancellationToken);
     }
 
     [Fact]
