@@ -11,7 +11,8 @@ public class MockNamecheapDdnsClientTests
         MockNamecheapDdnsClient client = new();
 
         // Act
-        NamecheapDdnsUpdateResponse response = await client.UpdateHostIpAddressAsync("@", "mydomain.com", "mypassword", "127.0.0.1");
+        NamecheapDdnsUpdateResponse response = await client.UpdateHostIpAddressAsync(
+            "@", "mydomain.com", "mypassword", "127.0.0.1", TestContext.Current.CancellationToken);
 
         // Assert
         Assert.True(response.Success);

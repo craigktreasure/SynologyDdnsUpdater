@@ -52,7 +52,8 @@ public class NamecheapDdnsClientTests
             host: "@",
             domainName: "mydomain.com",
             ddnsPassword: "myDdnsPassword",
-            ipAddress: "127.0.0.1");
+            ipAddress: "127.0.0.1",
+            TestContext.Current.CancellationToken);
 
         // Assert
         Assert.NotNull(requestUri);
@@ -85,7 +86,8 @@ public class NamecheapDdnsClientTests
             host: "@",
             domainName: "mydomain.com",
             ddnsPassword: "myDdnsPassword",
-            ipAddress: "127.0.0.1");
+            ipAddress: "127.0.0.1",
+            TestContext.Current.CancellationToken);
 
         // Assert
         Assert.NotNull(requestUri);
@@ -119,7 +121,8 @@ public class NamecheapDdnsClientTests
             host: "@&attack1=malicious",
             domainName: "mydomain.com&attack2=malicious",
             ddnsPassword: "myDdnsPassword&attack3=malicious",
-            ipAddress: "127.0.0.1&attack4=malicious");
+            ipAddress: "127.0.0.1&attack4=malicious",
+            TestContext.Current.CancellationToken);
 
         // Assert
         Assert.False(response.Success);

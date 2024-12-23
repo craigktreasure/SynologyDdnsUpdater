@@ -8,15 +8,8 @@ using Synology.Namecheap.Adapter.Library;
 
 using Test.Library.Namecheap;
 
-using Xunit.Abstractions;
-
-public class NamecheapDdnsUpdateTests
+public class NamecheapDdnsUpdateTests(ITestOutputHelper testOutputHelper)
 {
-    private readonly ITestOutputHelper testOutputHelper;
-
-    public NamecheapDdnsUpdateTests(ITestOutputHelper testOutputHelper)
-        => this.testOutputHelper = testOutputHelper;
-
     [Theory]
     [InlineData(SynologyDdnsResponses.NoHost, MockResponseConstants.DomainNameNotFound)]
     [InlineData("911 [Invalid IP]", MockResponseConstants.InvalidIp)]
@@ -27,17 +20,17 @@ public class NamecheapDdnsUpdateTests
     public async Task Update(string expectedResponse, string clientResponse)
     {
         // Arrange
-        using TestWebAppFactory factory = new(this.testOutputHelper,
+        using TestWebAppFactory factory = new(testOutputHelper,
             request => BuildResponseMessage(clientResponse));
         using HttpClient client = factory.CreateClient();
         Uri endpoint = BuildEndpoint();
 
         // Act
-        using HttpResponseMessage response = await client.GetAsync(endpoint);
+        using HttpResponseMessage response = await client.GetAsync(endpoint, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        string responseContent = await response.Content.ReadAsStringAsync();
+        string responseContent = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
         Assert.Equal(expectedResponse, responseContent);
     }
 
@@ -45,13 +38,13 @@ public class NamecheapDdnsUpdateTests
     public async Task Update_WithClientException()
     {
         // Arrange
-        using TestWebAppFactory factory = new(this.testOutputHelper,
+        using TestWebAppFactory factory = new(testOutputHelper,
             _ => throw new InvalidOperationException());
         using HttpClient client = factory.CreateClient();
         Uri endpoint = BuildEndpoint();
 
         // Act
-        using HttpResponseMessage response = await client.GetAsync(endpoint);
+        using HttpResponseMessage response = await client.GetAsync(endpoint, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);

@@ -15,14 +15,9 @@ using Synology.Namecheap.Adapter.Library;
 using Test.Library;
 using Test.Library.Namecheap;
 
-using Xunit.Abstractions;
-
-public class NamecheapDdnsTests
+[SuppressMessage("Usage", "xUnit1041:Fixture arguments to test classes must have fixture sources", Justification = "Analyzer is wrong.")]
+public class NamecheapDdnsTests(ITestOutputHelper testOutputHelper)
 {
-    private readonly ITestOutputHelper testOutputHelper;
-
-    public NamecheapDdnsTests(ITestOutputHelper testOutputHelper) => this.testOutputHelper = testOutputHelper;
-
     [Theory]
     [InlineData(SynologyDdnsResponses.NoHost, MockResponseConstants.DomainNameNotFound)]
     [InlineData("911 [Invalid IP]", MockResponseConstants.InvalidIp)]
@@ -33,7 +28,7 @@ public class NamecheapDdnsTests
     public async Task Update(string expectedResponse, string clientResponse)
     {
         // Arrange
-        ILogger<NamecheapDdns> logger = this.testOutputHelper.BuildLoggerFor<NamecheapDdns>();
+        ILogger<NamecheapDdns> logger = testOutputHelper.BuildLoggerFor<NamecheapDdns>();
         using NamecheapDdnsClient namecheapDdnsClient = BuildMockedClient(clientResponse);
         const string host = "@";
         const string domain = "mydomain.com";
@@ -51,7 +46,7 @@ public class NamecheapDdnsTests
     public async Task Update_WithClientException()
     {
         // Arrange
-        ILogger<NamecheapDdns> logger = this.testOutputHelper.BuildLoggerFor<NamecheapDdns>();
+        ILogger<NamecheapDdns> logger = testOutputHelper.BuildLoggerFor<NamecheapDdns>();
         using NamecheapDdnsClient namecheapDdnsClient = BuildMockedClient(_ => throw new InvalidOperationException());
         const string host = "@";
         const string domain = "mydomain.com";
