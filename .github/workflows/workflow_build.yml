@@ -30,7 +30,7 @@ jobs:
       container_version: ${{steps.version.outputs.container_version}}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
