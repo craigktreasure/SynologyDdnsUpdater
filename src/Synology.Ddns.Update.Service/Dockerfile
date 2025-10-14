@@ -1,6 +1,6 @@
 ﻿#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-ARG aspNetVersion=9.0
+ARG aspNetVersion=10.0
 # https://mcr.microsoft.com/en-us/product/dotnet/aspnet/tags
 ARG baseTag=${aspNetVersion}-azurelinux3.0-distroless
 ARG buildTag=${aspNetVersion}

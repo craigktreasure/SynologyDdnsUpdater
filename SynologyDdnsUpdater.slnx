@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Tests/">
+    <File Path="test/Directory.Packages.props" />
+    <Project Path="test/Namecheap.Library.Tests/Namecheap.Library.Tests.csproj" />
+    <Project Path="test/Synology.Ddns.Update.Service.ScenarioTests/Synology.Ddns.Update.Service.ScenarioTests.csproj" />
+    <Project Path="test/Synology.Ddns.Update.Service.Tests/Synology.Ddns.Update.Service.Tests.csproj" />
+    <Project Path="test/Synology.Namecheap.Adapter.Library.Tests/Synology.Namecheap.Adapter.Library.Tests.csproj" />
+    <Project Path="test/Test.Library/Test.Library.csproj" />
+  </Folder>
+  <Project Path="src/Namecheap.Library/Namecheap.Library.csproj" />
+  <Project Path="src/Synology.Ddns.Update.Service/Synology.Ddns.Update.Service.csproj" />
+  <Project Path="src/Synology.Namecheap.Adapter.Library/Synology.Namecheap.Adapter.Library.csproj" />
+</Solution>
