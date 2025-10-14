@@ -50,6 +50,23 @@ public class NamecheapDdnsUpdateTests(ITestOutputHelper testOutputHelper)
         Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
     }
 
+    [Fact]
+    public async Task Root_ReturnsOk()
+    {
+        // Arrange
+        using TestWebAppFactory factory = new(testOutputHelper, _ => BuildResponseMessage());
+        using HttpClient client = factory.CreateClient();
+
+        // Act
+        using HttpResponseMessage response = await client.GetAsync(new Uri("/", UriKind.Relative), TestContext.Current.CancellationToken);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        string responseContent = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
+        Assert.Contains("Synology DDNS Update Service", responseContent, StringComparison.Ordinal);
+        Assert.Contains("is running", responseContent, StringComparison.Ordinal);
+    }
+
     private static Uri BuildEndpoint(string host = "@", string domain = "mydomain.com", string password = "myPassword", string ip = "127.0.0.1")
         => new($"/namecheap/ddns/update?host={host}&domain={domain}&password={password}&ip={ip}", UriKind.Relative);
 

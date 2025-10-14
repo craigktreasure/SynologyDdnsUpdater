@@ -48,6 +48,7 @@ internal sealed class Program
 
         app.UseHttpsRedirection();
         app.UseRateLimiter();
+        app.MapGet("/", () => $"Synology DDNS Update Service {ThisAssembly.AssemblyInformationalVersion} is running");
         app.MapEndpoints();
         app.Run();
     }
