@@ -49,4 +49,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ vars.AZURE_WEBAPP_CONTAINER_NAME }}
-          images: ${{ vars.DOCKERHUB_USERNAME }}/synologyddnsupdater:${{ inputs.container_version }}
+          images: index.docker.io/${{ vars.DOCKERHUB_USERNAME }}/synologyddnsupdater:${{ inputs.container_version }}
