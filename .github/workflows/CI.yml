@@ -28,3 +28,5 @@ jobs:
     needs: build_ci
     uses: ./.github/workflows/workflow_deploy.yml
     secrets: inherit
+    with:
+      container_version: ${{ needs.build_ci.outputs.container_version }}
