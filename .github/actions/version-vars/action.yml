@@ -18,3 +18,5 @@ runs:
         $packageVersion = dotnet nbgv get-version --variable NuGetPackageVersion
         "container_version=$packageVersion" >> $env:GITHUB_ENV
         "package_version=$packageVersion" >> $env:GITHUB_ENV
+        "container_version=$packageVersion" >> $env:GITHUB_OUTPUT
+        "package_version=$packageVersion" >> $env:GITHUB_OUTPUT
