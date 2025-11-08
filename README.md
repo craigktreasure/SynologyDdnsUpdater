@@ -47,7 +47,7 @@ When configuring your DDNS, use something like the following:
 | DDNS form value         | Value                           | Example          |
 |-------------------------|---------------------------------|------------------|
 | Hostname                | Namecheap domain name           | `yourdomain.tld` |
-| Username/Email          | Namecheap host hame             | `@`              |
+| Username/Email          | Namecheap host name             | `@`              |
 | Password/Key            | Namecheap DDNS password         |                  |
 | External Address (IPV4) | Auto (your external IP address) |                  |
 
