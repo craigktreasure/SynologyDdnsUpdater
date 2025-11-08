@@ -4,6 +4,12 @@
 [![codecov][codecov-badge]][codecov]
 [![Docker Image Version (tag latest semver)][docker-image-badge]][docker-image]
 
+> **IMPORTANT NOTICE**
+>
+> The publicly hosted endpoint at `https://synologyddnsupdater.azurewebsites.net` will be shut down on **December 31st, 2025**.
+> Please migrate to the self-hosted container image ([craigktreasure/synologyddnsupdater][docker-image]) available on Docker Hub.
+> See the [hosting instructions](#hosting-the-application-yourself) below for details.
+
 This repository contains an ASP.NET Core application used to adapt [Namecheap][namecheap] DDNS update responses to
 something that a Synology [Customized DDNS Provider][synology-ddns] expects. This is done by calling the
 [Namecheap API][namecheap-ddns-api] directly on your behalf with the values you provide and then adapting the response.
@@ -23,22 +29,25 @@ worry about custom configuration getting cleared by Synology DSM updates.
 The first things you need to do are to [enable DDNS on your domain][namecheap-enable-ddns] and to
 [setup a host record][namecheap-setup-host].
 
-An instance of this application is hosted at <https://synologyddnsupdater.azurewebsites.net>, but you can easily build
-and deploy the application yourself if you so choose. If you deploy it yourself, you would need to adjust the host value
-in the following instructions.
+A prebuilt container image ([craigktreasure/synologyddnsupdater][docker-image]) is available on Docker Hub for easy
+self-hosting. See the [hosting instructions](#hosting-the-application-yourself) below to learn how to configure and run
+the service. Once you have the service running, adjust the host value in the following instructions to match your
+deployment.
 
 Follow the instructions for [Setting up a Customized DDNS Provider][synology-ddns] to setup a new Customized DDNS
 Provider using the following values:
 
 * Service Provider: `Namecheap-<domain identifier>` (Whatever you want really. It's just a name.)
-* Query URL: `https://synologyddnsupdater.azurewebsites.net/namecheap/ddns/update?host=__USERNAME__&domain=__HOSTNAME__&password=__PASSWORD__&ip=__MYIP__`
+* Query URL: `https://<your-host>/namecheap/ddns/update?host=__USERNAME__&domain=__HOSTNAME__&password=__PASSWORD__&ip=__MYIP__`
+
+Replace `<your-host>` with the hostname or IP address where you're hosting the service.
 
 When configuring your DDNS, use something like the following:
 
 | DDNS form value         | Value                           | Example          |
 |-------------------------|---------------------------------|------------------|
 | Hostname                | Namecheap domain name           | `yourdomain.tld` |
-| Username/Email          | Namecheap host hame             | `@`              |
+| Username/Email          | Namecheap host name             | `@`              |
 | Password/Key            | Namecheap DDNS password         |                  |
 | External Address (IPV4) | Auto (your external IP address) |                  |
 

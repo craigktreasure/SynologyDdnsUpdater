@@ -17,8 +17,12 @@
     - [Run in Docker using https](#run-in-docker-using-https)
     - [Run in Docker using http](#run-in-docker-using-http)
 
-An instance of this service is already hosted at <https://synologyddnsupdater.azurewebsites.net>, but the following
-instructions will explain how to run the service yourself.
+> **IMPORTANT NOTICE**
+>
+> The publicly hosted endpoint at `https://synologyddnsupdater.azurewebsites.net` will be shut down on **December 31st, 2025**.
+> Please use the self-hosted container image ([craigktreasure/synologyddnsupdater][docker-image]) available on Docker Hub.
+
+The following instructions will explain how to build and run the service yourself.
 
 ## Building the Docker container
 
