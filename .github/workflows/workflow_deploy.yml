@@ -10,26 +10,24 @@ on:
 
 jobs:
   deploy:
-    name: Deploy (Package)
+    name: Deploy
     runs-on: ubuntu-latest
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download webapp_package artifact from build job
-        uses: actions/download-artifact@v6
+      - name: Login to Azure
+        uses: azure/login@v2
         with:
-          name: webapp_package
-          path: webapp_package
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App for Containers
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: webapp_package
+          images: index.docker.io/${{ vars.DOCKERHUB_USERNAME }}/synologyddnsupdater:${{ inputs.container_version }}
 
   deploy-container:
     name: Deploy (Container)
