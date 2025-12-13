@@ -68,14 +68,14 @@ jobs:
 
       - name: Upload publish artifact
         if: ${{ inputs.push }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: publish
           path: __artifacts/publish
 
       - name: Upload webapp_package artifact for deployment job
         if: ${{ inputs.push }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: webapp_package
           path: __artifacts/publish/Synology.Ddns.Update.Service/release
