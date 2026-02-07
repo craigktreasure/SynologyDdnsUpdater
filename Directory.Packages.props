@@ -27,7 +27,7 @@
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.15.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.15.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.15.0" />
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUi" Version="10.1.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUi" Version="10.1.2" />
     <PackageVersion Include="System.Text.Json" Version="10.0.1" /> <!-- Transitive update -->
   </ItemGroup>
 
