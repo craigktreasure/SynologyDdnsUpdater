@@ -16,7 +16,7 @@
   <ItemGroup Label="Source Only Global Packages" Condition=" '$(SourceOnlyPackagesEnabled)' == 'true' ">
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" Condition="'$(WithoutGitRepository)' != 'true'" />
     <GlobalPackageReference Include="Nerdbank.GitVersioning" Version="3.9.50" />
-    <GlobalPackageReference Include="ReferenceTrimmer" Version="3.3.12" />
+    <GlobalPackageReference Include="ReferenceTrimmer" Version="3.4.5" />
   </ItemGroup>
 
   <ItemGroup>
